@@ -1,12 +1,18 @@
+from os import path
 from setuptools import find_packages, setup
 
 from method_override import __version__
 
+root = path.abspath()
+with open(path.join(root, 'README.md'), encoding='utf-8') as file:
+    long_description = file.read()
 
 setup(
     name='django-method-override',
     version=__version__,
     description='Django Middleware for HTTP Method Override Form Params & Header',  # noqa
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     author='LocalMed',
     author_email='pete.browne@localmed.com',
     url='https://gitlab.com/localmed/django-method-override',
