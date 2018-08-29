@@ -3,6 +3,7 @@
 *.pot
 *.py[co]
 .pytest_cache
+build
 dist
 venv
 MANIFEST
