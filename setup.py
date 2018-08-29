@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 from method_override import __version__
 
-root = path.abspath()
+root = path.abspath(path.dirname(__file__))
 with open(path.join(root, 'README.md'), encoding='utf-8') as file:
     long_description = file.read()
 
