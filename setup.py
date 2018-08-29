@@ -6,13 +6,16 @@ from method_override import __version__
 setup(
     name='django-method-override',
     version=__version__,
-    description='Django Middleware for HTTP Method Override Form Params & Header',
+    description='Django Middleware for HTTP Method Override Form Params & Header',  # noqa
     author='LocalMed',
     author_email='pete.browne@localmed.com',
-    url='https://bitbucket.org/localmed/django-method-override',
+    url='https://gitlab.com/localmed/django-method-override',
     license='MIT',
-    packages=find_packages(),
+    packages=find_packages(exclude=['tests', 'tests.*']),
     include_package_data=True,
+    install_requires=[
+        'django>=2.0'
+    ],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',

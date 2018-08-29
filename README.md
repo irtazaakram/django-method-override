@@ -1,66 +1,68 @@
-Django Method Override
-======================
+# Django Method Override
 
 Django middleware that overrides the HTTP method through either a `_method` form param (Ruby on Rails style) or the X-HTTP-Method-Override header.
 
-Installation
-------------
+## Installation
 
-1. Install via pip:
+1.  Install via pip:
 
-        :::bash
-        $ pip install django-method-override
+    ```bash
+    pip install django-method-override
+    ```
 
-2. Add the `MethodOverrideMiddleware` **after** Django's `CsrfViewMiddleware`:
+2.  Add the `MethodOverrideMiddleware` **after** Django's `CsrfViewMiddleware`:
 
-        :::python
-        MIDDLEWARE_CLASSES = (
-            # ...
-            'django.middleware.csrf.CsrfViewMiddleware',
-            'method_override.middleware.MethodOverrideMiddleware',
-            # ...
-        )
+    ```python
+    MIDDLEWARE = (
+        # ...
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'method_override.middleware.MethodOverrideMiddleware',
+        # ...
+    )
+    ```
 
-3. Add `method_override` to your `INSTALLED_APPS`:
+3.  Add `method_override` to your `INSTALLED_APPS`:
 
-        :::python
-        INSTALLED_APPS = (
-            # ...
-            'method_override',
-        )
+    ```python
+    INSTALLED_APPS = (
+        # ...
+        'method_override',
+    )
+    ```
 
-Usage
------
+## Usage
 
 Use the provided template tag in your form to add the desired form:
 
-    :::html+django
-    {% load method_override %}
-    <form action="{% url 'post-detail' %}" method="POST">
-      {% csrf_token %}
-      {% method_override 'PUT' %}
-    </form>
+```html+django
+{% load method_override %}
+<form action="{% url 'post-detail' %}" method="POST">
+    {% csrf_token %}
+    {% method_override 'PUT' %}
+</form>
+```
 
 Now, you may use `put` in you Class-based views. Django Method Override will even copy over the form data to `request.PUT`:
 
-    :::python
-    class PostView(View):
-        def put(self, request):
-            form = Form(request.PUT)
-            # ...
+```python
+class PostView(View):
+    def put(self, request):
+        form = Form(request.PUT)
+        # ...
+```
 
 The X-HTTP-Method-Override header is also supported. So for the above view, this will work too:
 
-    :::javascript
-    $.ajax({
-      'headers': {'X-HTTP-Method-Override': 'PUT'},
-      'type': 'POST',
-      'url': 'http://localhost:8000/posts/1/',
-      // ...
-    });
+```javascript
+$.ajax({
+    headers: { "X-HTTP-Method-Override": "PUT" },
+    type: "POST",
+    url: "http://localhost:8000/posts/1/"
+    // ...
+});
+```
 
-Configuration
--------------
+## Configuration
 
 Django Method Override can be customized from your Django `settings.py` file:
 
@@ -68,8 +70,9 @@ Django Method Override can be customized from your Django `settings.py` file:
 
 A list of the allowed methods for overriding. Defaults to:
 
-    :::python
-    ['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'OPTIONS', 'PATCH']
+```python
+['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'OPTIONS', 'PATCH']
+```
 
 ### `METHOD_OVERRIDE_PARAM_KEY`
 
@@ -83,10 +86,10 @@ The HTTP header to check. Defaults to `'HTTP_X_HTTP_METHOD_OVERRIDE'`
 
 The string tempalte used to render the input for the form param. It will based to kwargs, `name` and `value`. Defaults to:
 
-    :::python
-    '<input type="hidden" name="{name}" value="{value}">'
+```python
+'<input type="hidden" name="{name}" value="{value}">'
+```
 
-Copyright
----------
+## Copyright
 
 Copyright (c) 2013 [LocalMed, Inc.](http://www.localmed.com/). See LICENSE for details.
