@@ -7,12 +7,14 @@ class MethodOverrideMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
+        return self.get_response(request)
+
+    def process_view(self, request, view_func, view_args, view_kwargs):
         if request.method != 'POST':
-            return self.get_response(request)
+            return None
         method = self._get_method_override(request)
         if method in settings.ALLOWED_HTTP_METHODS:
             request.method = method
-        return self.get_response(request)
 
     def _get_method_override(self, request):
         method = (
