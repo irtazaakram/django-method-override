@@ -15,6 +15,8 @@ class MethodOverrideMiddleware:
         method = self._get_method_override(request)
         if method in settings.ALLOWED_HTTP_METHODS:
             request.method = method
+            if method != 'POST':
+                setattr(request, method, request.POST.copy())
 
     def _get_method_override(self, request):
         method = (
