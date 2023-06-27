@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls import url
+from django.urls import re_path
 from django.http import HttpResponse
 
 
@@ -17,4 +17,4 @@ def index_view(request):
     return HttpResponse('OK')
 
 
-urlpatterns = (url(r'', index_view), )
+urlpatterns = (re_path(r'', index_view), )
